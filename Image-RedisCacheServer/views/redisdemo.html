@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image-RedisCacheServer</title>
+    <link href="css/style.css" rel="stylesheet">
+    <script>
+        function loadImage(id) {
+            console.log("called");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(JSON.parse(this.response).image);
+                    document.getElementById("selectedImage").src= JSON.parse(this.response).image;
+                    document.getElementById("Heading").innerHTML = JSON.parse(this.response).text;
+                }
+            };
+            xhttp.open("GET", "/send/"+id, true);
+            xhttp.send();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 align="center"> Redis Cache Driver Page </h1>
+        <h3 align="center" id="Heading"></h3>
+        <div class="container_head">
+            <img id="selectedImage" src=""><br>
+        </div>
+        <button type="submit" onclick="loadImage(3)">Image SJSU</button><br>
+        <button type="submit" onclick="loadImage(1)">Image CMPE Building</button><br>
+        <button type="submit" onclick="loadImage(2)">Image Dr. Martin Luther King Jr. Library</button>
+
+    </div>
+</body>
+</html>
